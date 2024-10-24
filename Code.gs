@@ -168,7 +168,14 @@ function sectionCheck(message) {
 
 	section.addWidget(CardService.newKeyValue().setContent('From').setBottomLabel(message.getFrom()));
 	if (replyTo !== undefined && replyTo !== '') {
-		section.addWidget(CardService.newKeyValue().setContent('Reply').setBottomLabel(message.getReplyTo()));
+		if (doesReplyToAndFromMatch() === true) {
+			var replyToWarning = " - Warning: 'reply-to' does not match 'from'.";
+		}
+		else {
+			var replyToWarning = "";
+		}
+
+		section.addWidget(CardService.newKeyValue().setContent('Reply').setBottomLabel(message.getReplyTo() + replyToWarning));
 	}
 
 	section.addWidget(CardService.newKeyValue().setContent('From our Organization?').setBottomLabel(fromOrg));
@@ -310,6 +317,16 @@ function isTLDClean(message) {
  */
 function isFromCurrentUser(message) {
 	return message.getHeader('From').indexOf(Session.getActiveUser().getEmail()) !== -1;
+}
+
+/**
+ * Checks if the `reply-to` header matches the `from` header.
+ *
+ * @param {GmailMessage} message The Gmail message.
+ * @return {boolean}
+ */
+function doesReplyToAndFromMatch(message) {
+	return message.getReplyTo() === message.getFrom();
 }
 
 /**
