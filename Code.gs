@@ -250,13 +250,19 @@ function isEmailSenderAuthenticatedSPF(message) {
 }
 
 /**
- * Validates that the email is from the organization domain.
+ * Validates that the email is from the organization domain. (SPF)
  *
  * @param {GmailMessage} message The Gmail message.
  * @return {boolean}
  */
 function isFromOrgDomain(message) {
-	return message.getHeader('Received-SPF').indexOf('@' + ORG_DOMAIN) !== -1;
+	//Iterate through root org domains
+	for (var i = 0; i < ORG_DOMAINS.length; ++i) {
+		if (message.getHeader('Received-SPF').indexOf('@' + ORG_DOMAINS[i]) !== -1) {
+			return true;
+		}
+	}
+	return false;
 }
 
 /**

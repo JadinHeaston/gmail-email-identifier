@@ -1,4 +1,6 @@
-var ORG_DOMAIN = 'example.com';
+var ORG_DOMAINS = [
+	'example.com'
+]; //Exact matches. Subdomains must be included in this list.
 var ORG_IP_ADDRESS = '127.0.0.1'; //External IP of the mail relay.
 var CYBERSECURITY_EMAIL = 'potential.phishing@example.com'; //Cybersecurity email that forwarded emails get sent to.
 var PHISHING_HEADER = 'X-PHISH'; //Header key.
